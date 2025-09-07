@@ -5,6 +5,8 @@ services:
     env_file: "env"
     networks:
       - backend
+    volumes:
+      - persis_data:/data/db
   mongo_express:
     image: mongo-express
     env_file: "env"
@@ -39,3 +41,6 @@ services:
 networks:
   frontend:
   backend:
+
+volumes:
+  persis_data:
