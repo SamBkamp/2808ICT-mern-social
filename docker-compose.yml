@@ -2,9 +2,7 @@ services:
   db:
     image: mongo
     restart: always
-    environment:
-      MONGO_INITB_ROOT_USERNAME: root
-      MONGO_INITB_ROOT_PASSWORD: password
+    env_file: "env"
     networks:
       - backend
     ports:
