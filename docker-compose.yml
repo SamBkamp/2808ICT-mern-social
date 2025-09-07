@@ -5,8 +5,16 @@ services:
     env_file: "env"
     networks:
       - backend
+  mongo_express:
+    image: mongo-express
+    env_file: "env"
+    networks:
+      - backend
+      - frontend
     ports:
-      - 27017:27017
+      - 8081:8081
+    depends_on:
+      - db
 
 
 networks:
