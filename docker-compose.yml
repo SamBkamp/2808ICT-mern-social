@@ -1,0 +1,16 @@
+services:
+  db:
+    image: mongo
+    restart: always
+    environment:
+      MONGO_INITB_ROOT_USERNAME: root
+      MONGO_INITB_ROOT_PASSWORD: password
+    networks:
+      - backend
+    ports:
+      - 27017:27017
+
+
+networks:
+  frontend:
+  backend:
