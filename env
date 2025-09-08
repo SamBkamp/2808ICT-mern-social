@@ -9,3 +9,9 @@ ME_CONFIG_BASICAUTH_PASSWORD: "password"
 
 #mern
 MONGODB_URI: "mongodb://db:27017"
+
+# nginx
+SERVER_NAME: "_" # change on own file
+
+SSL_CERT_PATH: "/etc/nginx/certs/fullchain.pem" # change on own file
+SSL_KEY_PATH: "/etc/nginx/certs/privkey.pem" # change on own file

@@ -2,3 +2,7 @@
 /dist/
 /data/
 npm-debug.log
+
+certs/*
+!certs/.gitkeep
+*.pem
