@@ -33,18 +33,13 @@ services:
     ports:
       - 80:80   
       - 443:443 
-    environment:
-      - SERVER_NAME
-      - SSL_CERT_PATH
-      - SSL_KEY_PATH
     volumes:
-      - ./nginx.conf.template:/etc/nginx/nginx.conf.template:ro 
+      - ./nginx.conf.template:/etc/nginx/templates/nginx.conf.template:ro
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro 
       - ./certs:/etc/nginx/certs:ro 
     depends_on:
       - mern
     restart: always
-    command: /bin/sh -c "SERVER_NAME=\"${SERVER_NAME:-_}\"; SSL_CERT_PATH=\"${SSL_CERT_PATH:-/etc/nginx/certs/fullchain.pem}\"; SSL_KEY_PATH=\"${SSL_KEY_PATH:-/etc/nginx/certs/privkey.pem}\"; export SERVER_NAME SSL_CERT_PATH SSL_KEY_PATH; envsubst '$$SERVER_NAME $$SSL_CERT_PATH $$SSL_KEY_PATH' < /etc/nginx/nginx.conf.template > /etc/nginx/nginx.conf && nginx -g 'daemon off;'"
-
 
 networks:
   frontend:

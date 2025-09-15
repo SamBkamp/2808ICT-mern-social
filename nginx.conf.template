@@ -1,33 +1,26 @@
-worker_processes 2;
-events {
-       worker_connections 2000;
+upstream mern {
+	 server mern:3000;
 }
 
-http{
-
-	upstream mern {
-			 server mern:3000;
-	}
-
-	server {
-	       listen 80;
-	       server_name $SERVER_NAME;
-	       return 301 https://$host$request_uri;
-	}
-
-	server {
-	       listen 443 ssl;
-	       server_name $SERVER_NAME;
-	       ssl_certificate $SSL_CERT_PATH;
-	       ssl_certificate_key $SSL_KEY_PATH;
-	       ssl_protocols TLSv1.2 TLSv1.3;
-	       ssl_ciphers HIGH:!aNULL:!MD5;
-	       location / {
-	       		proxy_set_header Host $host;
-	       		proxy_set_header X-Real-IP $remote_addr;
-	       		proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-	       		proxy_set_header X-Forwarded-Proto $scheme;
-	       		proxy_pass http://mern;
-		}
-	}
+server {	
+       listen 80;	
+       server_name $SERVER_NAME;
+       return 301 https://$host$request_uri;
 }
+
+server {
+       listen 443 ssl;
+       server_name $SERVER_NAME;
+       ssl_certificate $SSL_CERT_PATH;
+       ssl_certificate_key $SSL_KEY_PATH;
+       ssl_protocols TLSv1.2 TLSv1.3;
+       ssl_ciphers HIGH:!aNULL:!MD5;
+}
+location / {
+	 proxy_set_header Host $host;
+	 proxy_set_header X-Real-IP $remote_addr;
+	 proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+	 proxy_set_header X-Forwarded-Proto $scheme;
+	 proxy_pass http://mern;
+}
+
