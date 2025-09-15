@@ -1,4 +1,4 @@
-FROM node:13
+FROM node:14
 RUN mkdir -p /data/mern
 WORKDIR /data/mern
 COPY . ./
