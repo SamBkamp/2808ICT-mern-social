@@ -3,4 +3,4 @@
 /data/
 npm-debug.log
 .vs/
-certs/
+certs/*.pem
