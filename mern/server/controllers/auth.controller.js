@@ -19,10 +19,9 @@ const signin = async (req, res) => {
         error: "Email and password don't match."
       })
     }
-
     const token = jwt.sign({
       _id: user._id
-    }, config.jwtSecret)
+    }, config.jwtSecret_priv, { algorithm: 'RS256' })
 
     res.cookie("t", token, {
       expire: new Date() + 9999
@@ -48,9 +47,24 @@ const signout = (req, res) => {
   })
 }
 
+
 const requireSignin = expressJwt({
-  secret: config.jwtSecret,
-  userProperty: 'auth'
+    secret: `-----BEGIN PUBLIC KEY-----
+MIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEAv4rUJhvsrogsOnTTVQep
+jj58zFoY43pJPIbhh3MulAW9TZbbswvwTvmTlEaSKQl6+u+q1EIaOdty8eujMQAN
+KSHMqdBWYUmJ7LVBdB6EsyCzvbbMn5TNZlh4JDY+N7acEYgGimfLAUg+ormys0Mg
+gdWUkEtJhKSdrAfEu9cg33I5wJRcURh+BeJiEsvfoZnu5KNWs8hkgVwMcqBz32Em
+dz81G2TsKx+nbD5XMygmM0zL6Aczuh/QLvDkV3rwJ1NH9X/Q4EUnKQgVbXeDGOLF
+teXR9e2qLXom00/K8yBI3jvCJfl/E0eY2jFy5b1srIme2FfJHSQPhrj6jjsWRYit
+JBaG8e33bP4mrcp9+kJ1d/mEIjGtsMDVGgs8uG1JxiE0iuifNqvMmaS0UE7QB5RR
+vehSLrGYRndNT38TvPkYu3CM2QT3nh7M7kXDPt8EsN/30m26Y1o79ybQqARG+dQM
++/eQxVR7xUoZ76INZ7awx4SLMPY1bRf9QVlVYMF/GO5vNiRWZS6veu5BE2j/1+7q
++E1ysrgOgtZ4hpYbecEHnAhsdjmtNSKzmsxm0xg7/O2vfO4d4TCltctlzNAoId4Z
+ESH1BUv31vpXacCN38LpIi+YEZyUWS9KqStir0hV39te5d6OZWbsHIXvQgcjpR6I
+uGsAn9zAePW3anL+ukNs38UCAwEAAQ==
+-----END PUBLIC KEY-----`,
+    userProperty: 'auth',
+    algorithms: ["HS256", "RS256"]
 })
 
 const hasAuthorization = (req, res, next) => {

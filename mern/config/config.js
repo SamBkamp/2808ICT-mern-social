@@ -1,12 +1,64 @@
 const config = {
-  env: process.env.NODE_ENV || 'development',
-  port: process.env.PORT || 3000,
-  jwtSecret: process.env.JWT_SECRET || "YOUR_secret_key",
-  mongoUri: process.env.MONGODB_URI ||
-    process.env.MONGO_HOST ||
-    'mongodb://' + (process.env.IP || 'localhost') + ':' +
-    (process.env.MONGO_PORT || '27017') +
-    '/mernproject'
+    env: process.env.NODE_ENV || 'development',
+    port: process.env.PORT || 3000,
+    jwtSecret: process.env.JWT_SECRET || "jwtRS256.key.pub",
+    jwtSecret_priv: process.env.JWT_SECRET_PRIV || `-----BEGIN RSA PRIVATE KEY-----
+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
+-----END RSA PRIVATE KEY-----`,
+    mongoUri: process.env.MONGODB_URI ||
+	process.env.MONGO_HOST ||
+	'mongodb://' + (process.env.IP || 'localhost') + ':' +
+	(process.env.MONGO_PORT || '27017') +
+	'/mernproject'
+    
 }
 
 export default config
